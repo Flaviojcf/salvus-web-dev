@@ -6,6 +6,9 @@
     "test": "jest",
     "lint": "npx eslint . --ext .ts --fix"
   },
+  "prisma": {
+    "schema": "src/infrastructure/mysql/prisma/schema.prisma"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -23,5 +26,8 @@
     "ts-jest": "^29.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.16.2"
   }
 }
