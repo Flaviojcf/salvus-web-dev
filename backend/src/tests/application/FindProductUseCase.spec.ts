@@ -1,5 +1,5 @@
 import FindProductUseCase from '@/application/useCase/find/FindProductUseCase'
-import { type OutputFindProductDTO, type InputFindProductDTO } from '@/application/useCase/find/dto/FindProductDTO'
+import { type InputFindProductDTO } from '@/application/useCase/find/dto/FindProductDTO'
 import Product from '@/domain/entities/Product'
 import type IProductRepository from '@/domain/repositories/IProductRepository'
 
@@ -20,7 +20,15 @@ describe('Find Product Use Case', () => {
 
     const foundProduct = new Product('Found Product', 'Description of Found Product', 4500)
 
-    jest.spyOn(mockProductRepository, 'find').mockResolvedValueOnce(foundProduct)
+    const mockProduct = {
+      Id: foundProduct.id,
+      Name: foundProduct.name,
+      Description: foundProduct.description,
+      Price: foundProduct.price,
+      CreatedAt: foundProduct.createdAt
+    }
+
+    jest.spyOn(mockProductRepository, 'find').mockResolvedValueOnce(mockProduct)
 
     const result = await sut.execute(input)
 
