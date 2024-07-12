@@ -35,8 +35,15 @@ export default class ProductRepository implements IProductRepository {
     }
   }
 
+  async delete (id: string): Promise<void> {
+    await prisma.product.delete({
+      where: {
+        id
+      }
+    })
+  }
+
   update: (product: Product) => Promise<void>
 
   findAll: () => Promise<OutPutProduct[]>
-  delete: (id: string) => Promise<void>
 }
