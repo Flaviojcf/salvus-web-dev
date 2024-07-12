@@ -1,4 +1,4 @@
-import Product from '@/domain/entities/Product'
+import Product from '../../../domain/entities/Product'
 import { DomainExceptionValidation } from '@/domain/validations/DomainExceptionValidation'
 
 describe('Product Entity', () => {

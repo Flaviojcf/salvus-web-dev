@@ -1,7 +1,8 @@
 import type IProductRepository from '@/domain/repositories/IProductRepository'
 import { type OutputCreateProductDTO, type InputCreateProductDTO } from './dto/CreateProductDTO'
-import Product from '@/domain/entities/Product'
+
 import { type InputCreateProduct } from '@/domain/repositories/IProductRepository'
+import Product from '../../../domain/entities/Product'
 
 export default class CreateProductUseCase {
   private readonly _productRepository: IProductRepository
