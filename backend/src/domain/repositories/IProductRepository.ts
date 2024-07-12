@@ -10,7 +10,7 @@ export interface OutPutProduct {
 export default interface IProductRepository {
   create: (product: Product) => Promise<void>
   update: (product: Product) => Promise<void>
-  find: (id: string) => Promise<Product>
+  find: (id: string) => Promise<OutPutProduct>
   findAll: () => Promise<OutPutProduct[]>
   delete: (id: string) => Promise<void>
 }

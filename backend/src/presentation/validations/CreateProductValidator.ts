@@ -7,8 +7,8 @@ const ProductSchema = z.object({
 })
 type IProductSchema = z.infer<typeof ProductSchema>
 
-export class ProductValidator {
-  static validateInput (data: IProductSchema): string[] {
+export class CreateProductValidator {
+  static validate (data: IProductSchema): string[] {
     const errors: string[] = []
 
     try {

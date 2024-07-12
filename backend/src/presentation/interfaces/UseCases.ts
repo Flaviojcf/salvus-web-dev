@@ -5,7 +5,7 @@ import type UpdateProductUseCase from '@/application/useCase/update/UpdateProduc
 
 export interface UseCases {
   createProduct: CreateProductUseCase
-  // findProduct: FindProductUseCase
+  findProduct: FindProductUseCase
   // listProduct: ListProductUseCase
   // updateProduct: UpdateProductUseCase
 }

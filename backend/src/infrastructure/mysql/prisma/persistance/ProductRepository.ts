@@ -16,8 +16,27 @@ export default class ProductRepository implements IProductRepository {
     })
   }
 
+  async find (id: string): Promise<OutPutProduct | null> {
+    const product = await prisma.product.findUnique({
+      where: {
+        id
+      }
+    })
+
+    if (!product) return
+
+    return {
+      Id: product.id,
+      Name: product.name,
+      Description: product.description,
+      Price: product.price,
+      CreatedAt: product.createdAt
+
+    }
+  }
+
   update: (product: Product) => Promise<void>
-  find: (id: string) => Promise<Product>
+
   findAll: () => Promise<OutPutProduct[]>
   delete: (id: string) => Promise<void>
 }
