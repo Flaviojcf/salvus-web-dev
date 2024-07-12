@@ -1,5 +1,6 @@
 import type IProductRepository from '@/domain/repositories/IProductRepository'
 import { type OutputFindProductDTO, type InputFindProductDTO } from './dto/FindProductDTO'
+import { type ErrorResponse } from '@/presentation/interfaces/ErrorResponse'
 
 export default class FindProductUseCase {
   private readonly _productRepository: IProductRepository
@@ -8,7 +9,7 @@ export default class FindProductUseCase {
     this._productRepository = productRepository
   }
 
-  async execute (input: InputFindProductDTO): Promise<OutputFindProductDTO | object> {
+  async execute (input: InputFindProductDTO): Promise<OutputFindProductDTO | ErrorResponse> {
     try {
       const product = await this._productRepository.find(input.Id)
 
