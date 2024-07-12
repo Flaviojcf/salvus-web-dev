@@ -1,6 +1,6 @@
 import type Product from '@/domain/entities/Product'
 
-interface OutPutProduct {
+export interface OutPutProduct {
   Id: string
   Name: string
   Description: string
