@@ -3,5 +3,4 @@ export default interface InputUpdateProductDTO {
   Name: string
   Description: string
   Price: number
-  CreatedAt: Date
 }
