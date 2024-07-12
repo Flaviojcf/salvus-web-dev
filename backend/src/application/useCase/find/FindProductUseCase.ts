@@ -10,28 +10,22 @@ export default class FindProductUseCase {
   }
 
   async execute (input: InputFindProductDTO): Promise<OutputFindProductDTO | ErrorResponse> {
-    try {
-      const product = await this._productRepository.find(input.Id)
+    const product = await this._productRepository.find(input.Id)
 
-      const outputFindProductDTO: OutputFindProductDTO = {
-        Id: product.Id,
-        Name: product.Name,
-        Description: product.Description,
-        CreatedAt: product.CreatedAt,
-        Price: product.Price
-      }
-
-      return outputFindProductDTO
-    } catch (err) {
-      return {
-        title: 'One or more validation errors occurred.',
-        status: 404,
-        errors: [
-          {
-            message: `The product with id '${input.Id}' was not found`
-          }
-        ]
-      }
+    if (!product) {
+      const error = new Error(`The product with id '${input.Id}' was not found`)
+      error.name = 'NotFoundError'
+      throw error
     }
+
+    const outputFindProductDTO: OutputFindProductDTO = {
+      Id: product.Id,
+      Name: product.Name,
+      Description: product.Description,
+      CreatedAt: product.CreatedAt,
+      Price: product.Price
+    }
+
+    return outputFindProductDTO
   }
 }
