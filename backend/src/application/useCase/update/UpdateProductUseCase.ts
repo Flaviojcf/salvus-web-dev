@@ -1,7 +1,6 @@
 import type IProductRepository from '@/domain/repositories/IProductRepository'
 import type InputUpdateProductDTO from './dto/UpdateProductDTO'
-import type FindProductUseCase from '../find/FindProductUseCase'
-import { type OutputFindProductDTO } from '../find/dto/FindProductDTO'
+import type FindProductUseCase from '@/application/useCase/find/FindProductUseCase'
 
 export default class UpdateProductUseCase {
   private readonly _productRepository: IProductRepository

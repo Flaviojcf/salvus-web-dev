@@ -1,17 +1,16 @@
-import type Product from '@/domain/entities/Product'
 import type IProductRepository from '@/domain/repositories/IProductRepository'
 import { prisma } from '../prisma'
-import { type InputProduct, type OutPutProduct } from '@/domain/repositories/IProductRepository'
+import { type InputUpdateProduct, type InputCreateProduct, type OutPutProduct } from '@/domain/repositories/IProductRepository'
 
 export default class ProductRepository implements IProductRepository {
-  async create (entity: Product): Promise<void> {
+  async create (entity: InputCreateProduct): Promise<void> {
     await prisma.product.create({
       data: {
-        id: entity.id,
-        name: entity.name,
-        description: entity.description,
-        price: entity.price,
-        createdAt: entity.createdAt
+        id: entity.Id,
+        name: entity.Name,
+        description: entity.Description,
+        price: entity.Price,
+        createdAt: entity.CreatedAt
       }
     })
   }
@@ -55,7 +54,7 @@ export default class ProductRepository implements IProductRepository {
     }))
   }
 
-  async update (product: InputProduct): Promise<void> {
+  async update (product: InputUpdateProduct): Promise<void> {
     await prisma.product.update({
       where: {
         id: product.Id
