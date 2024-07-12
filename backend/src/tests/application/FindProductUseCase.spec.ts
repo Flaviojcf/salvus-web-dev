@@ -1,6 +1,6 @@
 import FindProductUseCase from '@/application/useCase/find/FindProductUseCase'
 import { type InputFindProductDTO } from '@/application/useCase/find/dto/FindProductDTO'
-import Product from '../../domain/entities/Product'
+import Product from '../../domain/Entities/Product'
 import type IProductRepository from '@/domain/repositories/IProductRepository'
 
 describe('Find Product Use Case', () => {
