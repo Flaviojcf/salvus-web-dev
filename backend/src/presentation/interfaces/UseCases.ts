@@ -8,6 +8,6 @@ export interface UseCases {
   createProduct: CreateProductUseCase
   findProduct: FindProductUseCase
   deleteProduct: DeleteProductUseCase
-  // listProduct: ListProductUseCase
+  listProduct: ListProductUseCase
   // updateProduct: UpdateProductUseCase
 }

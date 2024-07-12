@@ -43,7 +43,17 @@ export default class ProductRepository implements IProductRepository {
     })
   }
 
-  update: (product: Product) => Promise<void>
+  async list (): Promise<OutPutProduct[]> {
+    const products = await prisma.product.findMany()
 
-  findAll: () => Promise<OutPutProduct[]>
+    return products.map((product) => ({
+      Id: product.id,
+      Name: product.name,
+      Description: product.description,
+      Price: product.price,
+      CreatedAt: product.createdAt
+    }))
+  }
+
+  update: (product: Product) => Promise<void>
 }

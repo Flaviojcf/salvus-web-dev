@@ -7,7 +7,7 @@ describe('List Products Use Case', () => {
   let mockProductRepository: IProductRepository
 
   beforeEach(() => {
-    mockProductRepository = { findAll: jest.fn().mockResolvedValue(null) } as unknown as IProductRepository
+    mockProductRepository = { list: jest.fn().mockResolvedValue(null) } as unknown as IProductRepository
 
     sut = new ListProductUseCase(mockProductRepository)
   })
@@ -31,11 +31,11 @@ describe('List Products Use Case', () => {
         CreatedAt: fixedDate
       }
     ]
-    jest.spyOn(mockProductRepository, 'findAll').mockResolvedValueOnce(mockProducts)
+    jest.spyOn(mockProductRepository, 'list').mockResolvedValueOnce(mockProducts)
 
     const result = await sut.execute()
 
-    expect(mockProductRepository.findAll).toHaveBeenCalled()
+    expect(mockProductRepository.list).toHaveBeenCalled()
     expect(result).toEqual(mockProducts)
   })
 })

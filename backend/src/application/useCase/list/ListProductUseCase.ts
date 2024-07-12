@@ -9,6 +9,6 @@ export default class ListProductUseCase {
   }
 
   async execute (): Promise<OutPutListProductDTO[]> {
-    return await this._productRepository.findAll()
+    return await this._productRepository.list()
   }
 }

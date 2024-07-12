@@ -14,22 +14,13 @@ export default class DeleteProductUseCase {
 
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   async execute (input: InputDeleteProductDTO): Promise<void | ErrorResponse > {
-    try {
-      const product = await this._findProductUseCase.execute({ Id: input.Id })
+    const product = await this._findProductUseCase.execute({ Id: input.Id }) as ErrorResponse
 
-      if (product) {
-        await this._productRepository.delete(input.Id)
-      }
-    } catch (err) {
-      return {
-        title: 'One or more validation errors occurred.',
-        status: 404,
-        errors: [
-          {
-            message: `The product with id '${input.Id}' was not found`
-          }
-        ]
-      }
+    if (!product) {
+      const error = new Error(`The product with id '${input.Id}' was not found`)
+      error.name = 'NotFoundError'
+      throw error
     }
+    await this._productRepository.delete(input.Id)
   }
 }
