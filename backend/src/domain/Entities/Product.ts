@@ -48,13 +48,6 @@ export default class Product extends BaseEntity {
     this.CreatedAt = value
   }
 
-  // public update (name: string, description: string, price: number): void {
-  //   Product.validateDomain(name, description, price)
-  //   this.Name = name
-  //   this.Description = description
-  //   this.Price = price
-  // }
-
   private static validateDomain (name: string, description: string, price: number): void {
     DomainExceptionValidation.When(!name.trim(), 'Name should not be empty')
     DomainExceptionValidation.When(!description.trim(), 'Description should not be empty')

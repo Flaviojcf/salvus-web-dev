@@ -46,7 +46,7 @@ export default class ProductController {
           status: 404,
           errors: [
             {
-              message: `The product with id '${id}' was not found`
+              message: err.message
             }
           ]
         })
@@ -77,7 +77,7 @@ export default class ProductController {
           status: 404,
           errors: [
             {
-              message: `The product with id '${id}' was not found`
+              message: err.message
             }
           ]
         })
@@ -106,7 +106,7 @@ export default class ProductController {
     const { Id, Name, Description, Price } = request.body as InputUpdateProductDTO
 
     try {
-      const validationErrors = UpdateProductValidator.validate({ Id, Name, Description, Price })
+      const validationErrors = UpdateProductValidator.validate({ id, Id, Name, Description, Price })
 
       if (validationErrors.length > 0) {
         UpdateProductValidator.listErrors(validationErrors, response)
@@ -129,7 +129,7 @@ export default class ProductController {
           status: 404,
           errors: [
             {
-              message: `The product with id '${id}' was not found`
+              message: err.message
             }
           ]
         })
