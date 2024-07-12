@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { type UseCases } from '@/presentation/interfaces/UseCases'
 import ProductController from '@/presentation/controller/ProductController'
+import { swaggerUiServe, swaggerUiSetup } from '../../../swagger'
 
 export function getProductRouter (useCases: UseCases): Router {
   const router = Router()
@@ -13,6 +14,8 @@ export function getProductRouter (useCases: UseCases): Router {
   router.delete('/product/:id', productController.delete.bind(productController))
   router.get('/product', productController.list.bind(productController))
   router.put('/product/:id', productController.update.bind(productController))
+
+  router.use('/api/swagger', swaggerUiServe, swaggerUiSetup)
 
   return router
 }
