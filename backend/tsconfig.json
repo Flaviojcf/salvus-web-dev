@@ -5,10 +5,9 @@
     "target": "es2021",
     "esModuleInterop": true,
     "allowJs": true,
+    "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
+      "@/*": ["src/*"]
     }
   }
 }
