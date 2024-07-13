@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { getProductRouter } from '@/presentation/route/ProductRoute'
 import { type UseCases } from '@/presentation/interfaces/UseCases'
 
@@ -11,6 +12,7 @@ export function main (useCases: UseCases): void {
   const app = express()
 
   app.use(express.json())
+  app.use(cors())
 
   setRoutes(app, useCases)
 
