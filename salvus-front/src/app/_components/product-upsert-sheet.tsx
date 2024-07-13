@@ -26,10 +26,13 @@ import {
 
 import { useRouter } from 'next/navigation'
 import { toast } from '@/components/ui/use-toast'
-import { api } from '@/api/api'
+import { createProduct, getProducts } from '../actions'
 
 type ProductUpsertSheetProps = {
   children?: React.ReactNode
+  fetchProducts: () => void
+  loading: boolean
+  setLoading: (loading: boolean) => void
 }
 
 export const upsertProductSchema = zod.object({
@@ -47,7 +50,12 @@ export const deleteProductSchema = zod.object({
   Id: zod.string().optional(),
 })
 
-export function ProductInsertSheet({ children }: ProductUpsertSheetProps) {
+export function ProductInsertSheet({
+  children,
+  fetchProducts,
+  loading,
+  setLoading,
+}: ProductUpsertSheetProps) {
   type NewProductFormData = zod.infer<typeof upsertProductSchema>
   const router = useRouter()
 
@@ -59,28 +67,33 @@ export function ProductInsertSheet({ children }: ProductUpsertSheetProps) {
 
   const ref = useRef<HTMLDivElement>()
 
-  async function handleSendProduct(data: NewProductFormData) {
-    const response = await api.post('/product', data)
-    reset()
-    router.refresh()
-    ref.current?.click()
+  async function handleCreateProduct(data: NewProductFormData) {
+    setLoading(true)
 
-    toast({
-      title: 'Sucesso',
-      description: 'Seu produto foi criado com sucesso',
-    })
+    try {
+      await createProduct(data)
+      reset()
+      fetchProducts()
+
+      toast({
+        title: 'Sucesso',
+        description: 'Seu produto foi criado com sucesso',
+      })
+    } catch (error) {
+      console.error('Erro ao criar o produto:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <div>{children}</div>
-      </SheetTrigger>
+      <div>{children}</div>
       <SheetContent>
         <FormProvider {...newProductFormData}>
           <form
             id="upsertProduct"
-            onSubmit={handleSubmit(handleSendProduct)}
+            onSubmit={handleSubmit(handleCreateProduct)}
             className="space-y-8"
           >
             <SheetHeader>

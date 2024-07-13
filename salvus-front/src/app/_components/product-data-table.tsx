@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
+import { ArrowUpDown, MoreHorizontal, PlusIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -34,36 +34,47 @@ import {
 } from '@/components/ui/table'
 import { useRouter } from 'next/navigation'
 import { toast } from '@/components/ui/use-toast'
+import { deleteProduct, getProducts } from '../actions'
+import { useState } from 'react'
+import { ProductInsertSheet } from './product-upsert-sheet'
+import { SheetTrigger } from '@/components/ui/sheet'
 
 interface Product {
-  id: string
-  title: string
-  description: string
-  price: number
-  createdAt: Date
+  Id: string
+  Name: string
+  Description: string
+  Price: number
+  CreatedAt: string
 }
 
 type ProductDataTableProps = {
   data: Product[]
 }
 
-export function ProductDataTable({ data }: ProductDataTableProps) {
+export function ProductDataTable({ data: initialData }: ProductDataTableProps) {
+  const [data, setData] = useState<Product[]>(initialData)
+  const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = useState({})
 
-  async function handleDeleteProduct(product: Product) {
-    router.refresh()
+  async function handleDeleteProduct(id: string) {
+    setLoading(true)
+    try {
+      await deleteProduct(id)
+      await fetchProducts()
 
-    toast({
-      title: 'Sucesso',
-      description: 'O item foi deletado com sucesso',
-    })
+      toast({
+        title: 'Sucesso',
+        description: 'O item foi deletado com sucesso',
+      })
+    } catch (error) {
+      console.error('Erro ao deletar o produto:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function handleUpdateProduct(product: Product) {
@@ -75,19 +86,35 @@ export function ProductDataTable({ data }: ProductDataTableProps) {
     })
   }
 
+  async function fetchProducts() {
+    try {
+      const products = await getProducts()
+      setData(products)
+    } catch (error) {
+      console.error('Erro ao buscar os produtos:', error)
+    }
+  }
+
   const columns: ColumnDef<Product>[] = [
     {
       accessorKey: 'id',
       header: () => <div>Id</div>,
       cell: ({ row }) => {
-        return <div className="font-medium">{row.original.id}</div>
+        return <div className="font-medium">{row.original.Id}</div>
       },
     },
     {
-      accessorKey: 'title',
+      accessorKey: 'Name',
       header: () => <div>Título</div>,
       cell: ({ row }) => {
-        return <div className="font-medium">{row.original.title}</div>
+        return <div className="font-medium">{row.original.Name}</div>
+      },
+    },
+    {
+      accessorKey: 'Price',
+      header: () => <div>Título</div>,
+      cell: ({ row }) => {
+        return <div className="font-medium">{row.original.Price}</div>
       },
     },
     {
@@ -109,11 +136,7 @@ export function ProductDataTable({ data }: ProductDataTableProps) {
         )
       },
       cell: ({ row }) => {
-        return (
-          <div className="font-medium">
-            {row.original.createdAt.toLocaleDateString()}
-          </div>
-        )
+        return <div className="font-medium">{row.original.CreatedAt}</div>
       },
     },
     {
@@ -133,7 +156,7 @@ export function ProductDataTable({ data }: ProductDataTableProps) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(product.id)}
+                onClick={() => navigator.clipboard.writeText(product.Id)}
               >
                 Copiar ID
               </DropdownMenuItem>
@@ -141,7 +164,7 @@ export function ProductDataTable({ data }: ProductDataTableProps) {
               <DropdownMenuItem onClick={() => handleUpdateProduct(product)}>
                 Atualizar produto
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleDeleteProduct(product)}>
+              <DropdownMenuItem onClick={() => handleDeleteProduct(product.Id)}>
                 Deletar
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -172,6 +195,18 @@ export function ProductDataTable({ data }: ProductDataTableProps) {
 
   return (
     <div className="w-full">
+      <ProductInsertSheet
+        fetchProducts={fetchProducts}
+        loading={loading}
+        setLoading={setLoading}
+      >
+        <SheetTrigger asChild>
+          <Button variant="outline" size="sm" className="mb-4 ml-auto flex">
+            <PlusIcon className="mr-3 h-4 w-4" />
+            Adicionar Produto
+          </Button>
+        </SheetTrigger>
+      </ProductInsertSheet>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -193,7 +228,19 @@ export function ProductDataTable({ data }: ProductDataTableProps) {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {loading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  <div className="flex h-full w-full items-center justify-center space-x-2">
+                    <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-solid border-black border-opacity-90"></div>
+                    <div>Carregando...</div>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -223,7 +270,7 @@ export function ProductDataTable({ data }: ProductDataTableProps) {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
+        <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredRowModel().rows.length} item(s) registrados.
         </div>
         <div className="space-x-2">
