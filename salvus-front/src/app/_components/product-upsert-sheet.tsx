@@ -26,34 +26,41 @@ import {
 
 import { useRouter } from 'next/navigation'
 import { toast } from '@/components/ui/use-toast'
+import { api } from '@/api/api'
 
-type TodoUpsertSheetProps = {
+type ProductUpsertSheetProps = {
   children?: React.ReactNode
 }
 
-export const upsertTodoSchema = zod.object({
-  title: zod.string(),
-  description: zod.string(),
-  price: zod.number(),
+export const upsertProductSchema = zod.object({
+  Name: zod.string(),
+  Description: zod.string(),
+  Price: zod
+    .string()
+    .transform((val) => parseFloat(val))
+    .refine((val) => !isNaN(val), {
+      message: 'Price must be a number',
+    }),
 })
 
-export const deleteTodoSchema = zod.object({
-  id: zod.string().optional(),
+export const deleteProductSchema = zod.object({
+  Id: zod.string().optional(),
 })
 
-export function ProductInsertSheet({ children }: TodoUpsertSheetProps) {
-  type NewTodoFormData = zod.infer<typeof upsertTodoSchema>
+export function ProductInsertSheet({ children }: ProductUpsertSheetProps) {
+  type NewProductFormData = zod.infer<typeof upsertProductSchema>
   const router = useRouter()
 
-  const newTodoFormData = useForm<NewTodoFormData>({
-    resolver: zodResolver(upsertTodoSchema),
+  const newProductFormData = useForm<NewProductFormData>({
+    resolver: zodResolver(upsertProductSchema),
   })
 
-  const { handleSubmit, register, reset, watch } = newTodoFormData
+  const { handleSubmit, register, reset, watch } = newProductFormData
 
   const ref = useRef<HTMLDivElement>()
 
-  async function handleSendTodo(data: NewTodoFormData) {
+  async function handleSendProduct(data: NewProductFormData) {
+    const response = await api.post('/product', data)
     reset()
     router.refresh()
     ref.current?.click()
@@ -70,10 +77,10 @@ export function ProductInsertSheet({ children }: TodoUpsertSheetProps) {
         <div>{children}</div>
       </SheetTrigger>
       <SheetContent>
-        <FormProvider {...newTodoFormData}>
+        <FormProvider {...newProductFormData}>
           <form
-            id="upsertTodo"
-            onSubmit={handleSubmit(handleSendTodo)}
+            id="upsertProduct"
+            onSubmit={handleSubmit(handleSendProduct)}
             className="space-y-8"
           >
             <SheetHeader>
@@ -92,7 +99,7 @@ export function ProductInsertSheet({ children }: TodoUpsertSheetProps) {
                   <FormControl>
                     <Input
                       placeholder="Digite o título da tarefa"
-                      {...register('title')}
+                      {...register('Name')}
                     />
                   </FormControl>
                   <FormDescription>Este será o nome exibido</FormDescription>
@@ -108,7 +115,7 @@ export function ProductInsertSheet({ children }: TodoUpsertSheetProps) {
                   <FormControl>
                     <Input
                       placeholder="Informe a descrição do produto"
-                      {...register('description')}
+                      {...register('Description')}
                     />
                   </FormControl>
                   <FormDescription>
@@ -119,14 +126,15 @@ export function ProductInsertSheet({ children }: TodoUpsertSheetProps) {
               )}
             />
             <FormField
-              name="description"
+              name="price"
               render={() => (
                 <FormItem>
                   <FormLabel>Preço do produto</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Informe o preço do produto"
-                      {...register('price')}
+                      type="number"
+                      {...register('Price')}
                     />
                   </FormControl>
                   <FormDescription>Este será o preço exibido</FormDescription>
@@ -138,9 +146,9 @@ export function ProductInsertSheet({ children }: TodoUpsertSheetProps) {
             <SheetFooter className="mt-auto">
               <Button
                 type="submit"
-                form="upsertTodo"
+                form="upsertProduct"
                 disabled={
-                  !(watch('title') && watch('description') && watch('price'))
+                  !(watch('Name') && watch('Description') && watch('Price'))
                 }
               >
                 Salvar
