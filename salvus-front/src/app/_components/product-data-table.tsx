@@ -38,6 +38,7 @@ import { deleteProduct, getProducts } from '../actions'
 import { useState } from 'react'
 import { ProductInsertSheet } from './product-upsert-sheet'
 import { SheetTrigger } from '@/components/ui/sheet'
+import { formatPriceBRL } from '@/utils/format-brl-price'
 
 interface Product {
   Id: string
@@ -105,16 +106,24 @@ export function ProductDataTable({ data: initialData }: ProductDataTableProps) {
     },
     {
       accessorKey: 'Name',
-      header: () => <div>Título</div>,
+      header: () => <div>Nome</div>,
       cell: ({ row }) => {
         return <div className="font-medium">{row.original.Name}</div>
       },
     },
     {
-      accessorKey: 'Price',
-      header: () => <div>Título</div>,
+      accessorKey: 'Description',
+      header: () => <div>Descrição</div>,
       cell: ({ row }) => {
-        return <div className="font-medium">{row.original.Price}</div>
+        return <div className="font-medium">{row.original.Description}</div>
+      },
+    },
+    {
+      accessorKey: 'Price',
+      header: () => <div>Preço</div>,
+      cell: ({ row }) => {
+        const formattedPrice = formatPriceBRL(row.original.Price)
+        return <div className="font-medium">{formattedPrice}</div>
       },
     },
     {
