@@ -15,7 +15,6 @@ interface CreateProductFormData {
 }
 
 interface UpdateProductFormData {
-  Id: string
   Name: string
   Description: string
   Price: number
@@ -67,9 +66,9 @@ export async function deleteProduct(Id: string) {
   }
 }
 
-export async function updateProduct(data: UpdateProductFormData) {
+export async function updateProduct(Id: string, data: UpdateProductFormData) {
   try {
-    await api.put(`/product/${data.Id}`, data)
+    await api.put(`/product/${Id}`, data)
 
     return getProducts()
   } catch (err) {

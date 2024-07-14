@@ -24,7 +24,6 @@ const options: swaggerJsdoc.Options = {
         UpdateProductDTO: {
           type: 'object',
           properties: {
-            Id: { type: 'string' },
             Name: { type: 'string' },
             Description: { type: 'string' },
             Price: { type: 'number' }

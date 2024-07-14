@@ -103,10 +103,10 @@ export default class ProductController {
 
   async update (request: Request, response: Response): Promise<Response> {
     const { id } = request.params
-    const { Id, Name, Description, Price } = request.body as InputUpdateProductDTO
+    const { Name, Description, Price } = request.body as InputUpdateProductDTO
 
     try {
-      const validationErrors = UpdateProductValidator.validate({ id, Id, Name, Description, Price })
+      const validationErrors = UpdateProductValidator.validate({ Id: id, Name, Description, Price })
 
       if (validationErrors.length > 0) {
         UpdateProductValidator.listErrors(validationErrors, response)
@@ -115,7 +115,7 @@ export default class ProductController {
       }
 
       await this.updateProductUseCase.execute({
-        Id,
+        Id: id,
         Name,
         Description,
         Price

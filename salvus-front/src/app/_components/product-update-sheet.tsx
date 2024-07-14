@@ -80,7 +80,7 @@ export function ProductUpdateSheet({
   async function handleUpdateProduct(data: UpdateProductFormData) {
     setLoading(true)
     try {
-      const error: ErrorResponse = await updateProduct(data)
+      const error: ErrorResponse = await updateProduct(data.Id, data)
 
       reset()
       fetchProducts()
