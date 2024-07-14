@@ -5,9 +5,6 @@ import {
   DashBoardPageHeaderTitle,
   DashBoardPageMain,
 } from '@/components/dashboard/page'
-import { ProductInsertSheet } from './_components/product-upsert-sheet'
-import { Button } from '@/components/ui/button'
-import { PlusIcon } from '@radix-ui/react-icons'
 import { ProductDataTable } from './_components/product-data-table'
 import { getProducts } from './actions'
 import { useEffect, useState } from 'react'
@@ -42,7 +39,9 @@ export default function Home() {
   return (
     <DashBoardPage>
       <DashBoardPageHeader className="max-h-[49px]">
-        <DashBoardPageHeaderTitle>Produtos</DashBoardPageHeaderTitle>
+        <DashBoardPageHeaderTitle className="dark:text-white">
+          Produtos
+        </DashBoardPageHeaderTitle>
       </DashBoardPageHeader>
       <DashBoardPageMain>
         {isLoading ? <Loading /> : <ProductDataTable data={product} />}
