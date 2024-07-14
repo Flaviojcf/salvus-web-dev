@@ -38,7 +38,8 @@ export async function getProducts() {
 
 export async function createProduct(data: CreateProductFormData) {
   try {
-    await api.post('/product', data)
+    const response = await api.post('/product', data)
+    return response.data
   } catch (err) {
     if (axios.isAxiosError(err) && err.response && err.response.data) {
       const errorResponse: ErrorResponse = err.response.data
