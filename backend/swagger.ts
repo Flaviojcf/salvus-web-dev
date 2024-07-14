@@ -11,7 +11,7 @@ const options: swaggerJsdoc.Options = {
       description: 'This is an API solution to Salvus Challenge'
     }
   },
-  apis: [path.resolve(__dirname, './src/presentation/route/*.swagger.route.ts')]
+  apis: [path.resolve(__dirname, './src/presentation/route/*.swagger.md')]
 }
 
 const specs = swaggerJsdoc(options)
