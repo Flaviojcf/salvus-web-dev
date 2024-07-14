@@ -46,7 +46,10 @@ export const updateProductSchema = zod.object({
   Id: zod.string(),
   Name: zod.string(),
   Description: zod.string(),
-  Price: zod.number(),
+  Price: zod.union([
+    zod.string().transform((val) => parseFloat(val)),
+    zod.number(),
+  ]),
   CreatedAt: zod.string(),
 })
 
@@ -64,7 +67,10 @@ export function ProductUpdateSheet({
       Id: product.Id,
       Name: product.Name,
       Description: product.Description,
-      Price: product.Price,
+      Price:
+        typeof product.Price === 'number'
+          ? product.Price
+          : parseFloat(product.Price as string),
       CreatedAt: product.CreatedAt,
     },
   })
