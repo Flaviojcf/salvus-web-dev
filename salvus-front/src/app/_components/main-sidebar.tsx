@@ -60,7 +60,7 @@ export function MainDashboardSidebar() {
             <DashboardSidebarNavLink
               isTargert
               href="https://github.com/Flaviojcf"
-              className="gap-2 text-xs text-gray-500 hover:text-gray-900"
+              className="gap-2 text-xs text-gray-500 hover:text-gray-900 dark:text-white"
             >
               <GitHubLogoIcon />
               Github
@@ -68,7 +68,7 @@ export function MainDashboardSidebar() {
             <DashboardSidebarNavLink
               isTargert
               href="https://www.linkedin.com/in/flaviojcf"
-              className="gap-2 text-xs text-gray-500 hover:text-gray-900"
+              className="gap-2 text-xs text-gray-500 hover:text-gray-900 dark:text-white"
             >
               <LinkedInLogoIcon />
               Linkedin
@@ -76,7 +76,7 @@ export function MainDashboardSidebar() {
             <DashboardSidebarNavLink
               isTargert
               href="https://flaviojcf.vercel.app/"
-              className="gap-2 text-xs text-gray-500 hover:text-gray-900"
+              className="gap-2 text-xs text-gray-500 hover:text-gray-900 dark:text-white"
             >
               <DesktopIcon />
               Portfólio
@@ -84,7 +84,9 @@ export function MainDashboardSidebar() {
           </DashboardSidebarNavMain>
         </DashboardSidebarNav>
       </DashboardSidebarMain>
-      <DashboardSidebarFooter>©2024 Flaviojcf</DashboardSidebarFooter>
+      <DashboardSidebarFooter className="dark:text-white">
+        ©2024 Flaviojcf
+      </DashboardSidebarFooter>
     </DashboardSidebar>
   )
 }

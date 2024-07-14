@@ -10,8 +10,8 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
+  SheetTrigger,
 } from '@/components/ui/sheet'
-
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -24,47 +24,57 @@ import {
 } from '@/components/ui/form'
 
 import { toast } from '@/components/ui/use-toast'
-import { createProduct } from '../actions'
+import { updateProduct } from '../actions'
 import { ErrorResponse } from './product-data-table'
 
-type ProductUpsertSheetProps = {
-  children?: React.ReactNode
-  fetchProducts: () => void
-  setLoading: (loading: boolean) => void
+interface Product {
+  Id: string
+  Name: string
+  Description: string
+  Price: number
+  CreatedAt: string
 }
 
-export const upsertProductSchema = zod.object({
+type ProductUpdateSheetProps = {
+  product: Product
+  fetchProducts: () => void
+  setLoading: (loading: boolean) => void
+  children?: React.ReactNode
+}
+
+export const updateProductSchema = zod.object({
+  Id: zod.string(),
   Name: zod.string(),
   Description: zod.string(),
-  Price: zod
-    .string()
-    .transform((val) => parseFloat(val))
-    .refine((val) => !isNaN(val), {
-      message: 'Price must be a number',
-    }),
+  Price: zod.number(),
+  CreatedAt: zod.string(),
 })
 
-export const deleteProductSchema = zod.object({
-  Id: zod.string().optional(),
-})
-
-export function ProductInsertSheet({
-  children,
+export function ProductUpdateSheet({
+  product,
   fetchProducts,
+  children,
   setLoading,
-}: ProductUpsertSheetProps) {
-  type NewProductFormData = zod.infer<typeof upsertProductSchema>
+}: ProductUpdateSheetProps) {
+  type UpdateProductFormData = zod.infer<typeof updateProductSchema>
 
-  const newProductFormData = useForm<NewProductFormData>({
-    resolver: zodResolver(upsertProductSchema),
+  const updateProductFormData = useForm<UpdateProductFormData>({
+    resolver: zodResolver(updateProductSchema),
+    defaultValues: {
+      Id: product.Id,
+      Name: product.Name,
+      Description: product.Description,
+      Price: product.Price,
+      CreatedAt: product.CreatedAt,
+    },
   })
 
-  const { handleSubmit, register, reset, watch } = newProductFormData
+  const { handleSubmit, register, reset, watch } = updateProductFormData
 
-  async function handleCreateProduct(data: NewProductFormData) {
+  async function handleUpdateProduct(data: UpdateProductFormData) {
     setLoading(true)
     try {
-      const error: ErrorResponse = await createProduct(data)
+      const error: ErrorResponse = await updateProduct(data)
 
       reset()
       fetchProducts()
@@ -88,30 +98,32 @@ export function ProductInsertSheet({
 
   return (
     <Sheet>
-      <div>{children}</div>
+      <SheetTrigger asChild>
+        <div>{children}</div>
+      </SheetTrigger>
       <SheetContent>
-        <FormProvider {...newProductFormData}>
+        <FormProvider {...updateProductFormData}>
           <form
-            id="upsertProduct"
-            onSubmit={handleSubmit(handleCreateProduct)}
+            id="updateProduct"
+            onSubmit={handleSubmit(handleUpdateProduct)}
             className="space-y-8"
           >
             <SheetHeader>
-              <SheetTitle>Crie um novo produto</SheetTitle>
+              <SheetTitle>Atualizar Produto</SheetTitle>
               <SheetDescription>
-                Adicione as informações do novo produto aqui. Depois clique para
+                Atualize as informações do produto aqui. Depois clique para
                 salvar.
               </SheetDescription>
             </SheetHeader>
 
             <FormField
-              name="title"
+              name="Name"
               render={() => (
                 <FormItem>
                   <FormLabel>Nome do produto</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Digite o título da tarefa"
+                      placeholder="Digite o nome do produto"
                       {...register('Name')}
                     />
                   </FormControl>
@@ -121,7 +133,7 @@ export function ProductInsertSheet({
               )}
             />
             <FormField
-              name="description"
+              name="Description"
               render={() => (
                 <FormItem>
                   <FormLabel>Descrição do produto</FormLabel>
@@ -132,14 +144,14 @@ export function ProductInsertSheet({
                     />
                   </FormControl>
                   <FormDescription>
-                    Este será a descrição exibida
+                    Esta será a descrição exibida
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
-              name="price"
+              name="Price"
               render={() => (
                 <FormItem>
                   <FormLabel>Preço do produto</FormLabel>
@@ -159,7 +171,7 @@ export function ProductInsertSheet({
             <SheetFooter className="mt-auto">
               <Button
                 type="submit"
-                form="upsertProduct"
+                form="updateProduct"
                 disabled={
                   !(watch('Name') && watch('Description') && watch('Price'))
                 }

@@ -11,7 +11,9 @@ export default function Layout({ children }: PropsWithChildren) {
   return (
     <DashBoardPage>
       <DashBoardPageHeader>
-        <DashBoardPageHeaderTitle>Configurações</DashBoardPageHeaderTitle>
+        <DashBoardPageHeaderTitle className="dark:text-white">
+          Configurações
+        </DashBoardPageHeaderTitle>
       </DashBoardPageHeader>
       <DashBoardPageMain>
         <div className="max-w-[800px]">
