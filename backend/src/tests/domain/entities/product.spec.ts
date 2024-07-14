@@ -65,17 +65,4 @@ describe('Product Entity', () => {
       expect(error.message).toBe('Price should be greater than zero')
     }
   })
-
-  // it('should update product correctly with valid parameters', () => {
-  //   // Arrange
-  //   const product = new Product('Notebook', 'A great notebook', 4500)
-
-  //   // Act
-  //   product.update('Updated name', 'Updated description', 5000)
-
-  //   // Assert
-  //   expect(product.name).toBe('Updated name')
-  //   expect(product.description).toBe('Updated description')
-  //   expect(product.price).toBe(5000)
-  // })
 })
