@@ -111,7 +111,7 @@ export function ProductInsertSheet({
                   <FormLabel>Nome do produto</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Digite o título da tarefa"
+                      placeholder="Digite o nome do produto"
                       {...register('Name')}
                     />
                   </FormControl>
