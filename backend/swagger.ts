@@ -3,15 +3,37 @@ import swaggerUi from 'swagger-ui-express'
 import path from 'path'
 
 const options: swaggerJsdoc.Options = {
-  definition: {
+  swaggerDefinition: {
     openapi: '3.0.0',
     info: {
       title: 'Product API',
-      version: '1.0.0',
-      description: 'This is an API solution to Salvus Challenge'
+      description: 'Operations related to products',
+      version: '1.0.0'
+    },
+    components: {
+      schemas: {
+        CreateProductDTO: {
+          type: 'object',
+          properties: {
+            Id: { type: 'string' },
+            Name: { type: 'string' },
+            Description: { type: 'string' },
+            Price: { type: 'number' }
+          }
+        },
+        UpdateProductDTO: {
+          type: 'object',
+          properties: {
+            Id: { type: 'string' },
+            Name: { type: 'string' },
+            Description: { type: 'string' },
+            Price: { type: 'number' }
+          }
+        }
+      }
     }
   },
-  apis: [path.resolve(__dirname, './src/presentation/route/*.swagger.md')]
+  apis: [path.resolve(__dirname, './src/presentation/route/*.swagger.js')]
 }
 
 const specs = swaggerJsdoc(options)
