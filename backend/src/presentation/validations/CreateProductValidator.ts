@@ -1,8 +1,8 @@
 import { type Response } from 'express'
 import { z } from 'zod'
 const ProductSchema = z.object({
-  Name: z.string().min(1, 'Name is required and must be a non-empty string.'),
-  Description: z.string().min(1, 'Description is required and must be a non-empty string.'),
+  Name: z.string().trim().min(1, 'Name is required and must be a non-empty string.'),
+  Description: z.string().trim().min(1, 'Description is required and must be a non-empty string.'),
   Price: z.number().positive('Price is required and must be a positive number.')
 })
 type IProductSchema = z.infer<typeof ProductSchema>
