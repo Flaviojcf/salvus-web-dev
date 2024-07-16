@@ -39,6 +39,7 @@ import { ProductInsertSheet } from './product-upsert-sheet'
 import { SheetTrigger } from '@/components/ui/sheet'
 import { formatPriceBRL } from '@/utils/format-brl-price'
 import { ProductUpdateSheet } from './product-update-sheet'
+import { formatDatePTBR } from '@/utils/format-data'
 
 interface Product {
   Id: string
@@ -162,7 +163,11 @@ export function ProductDataTable({ data: initialData }: ProductDataTableProps) {
         )
       },
       cell: ({ row }) => {
-        return <div className="font-medium">{row.original.CreatedAt}</div>
+        return (
+          <div className="font-medium">
+            {formatDatePTBR(row.original.CreatedAt)}
+          </div>
+        )
       },
     },
     {
