@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  salvus-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: salvus-web-dev
+      MYSQL_DATABASE: salvus_web_dev
+      MYSQL_USER: root
+      MYSQL_PASSWORD: salvus-web-dev
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+    driver: local
