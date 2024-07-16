@@ -70,7 +70,6 @@ export function ProductDataTable({ data: initialData }: ProductDataTableProps) {
     setLoading(true)
     try {
       const error: ErrorResponse = await deleteProduct(id)
-      console.log(error)
       await fetchProducts()
 
       if (!error != null) {
@@ -229,7 +228,11 @@ export function ProductDataTable({ data: initialData }: ProductDataTableProps) {
     <div className="w-full">
       <ProductInsertSheet fetchProducts={fetchProducts} setLoading={setLoading}>
         <SheetTrigger asChild>
-          <Button variant="outline" size="sm" className="mb-4 ml-auto flex">
+          <Button
+            variant="outline"
+            size="sm"
+            className="mb-4 ml-auto flex max-lg:m-auto max-lg:mb-4"
+          >
             <PlusIcon className="mr-3 h-4 w-4" />
             Adicionar Produto
           </Button>

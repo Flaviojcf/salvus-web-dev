@@ -50,7 +50,7 @@ export function MainDashboardSidebar() {
           </DashboardSidebarNavMain>
         </DashboardSidebarNav>
 
-        <DashboardSidebarNav className="mt-auto">
+        <DashboardSidebarNav className="mt-auto max-lg:hidden">
           <DashboardSidebarNavHeader>
             <DashboardSidebarNavHeaderTitle className="text-bold">
               Links extras
@@ -84,7 +84,7 @@ export function MainDashboardSidebar() {
           </DashboardSidebarNavMain>
         </DashboardSidebarNav>
       </DashboardSidebarMain>
-      <DashboardSidebarFooter className="dark:text-white">
+      <DashboardSidebarFooter className="dark:text-white max-lg:hidden">
         ©2024 Flaviojcf
       </DashboardSidebarFooter>
     </DashboardSidebar>

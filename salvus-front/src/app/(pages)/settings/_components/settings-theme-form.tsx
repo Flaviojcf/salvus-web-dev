@@ -55,11 +55,11 @@ export function SettingsThemeForm() {
         className="space-y-8"
       >
         <Card>
-          <CardHeader>
+          <CardHeader className="max-lg:flex max-lg:text-center">
             <CardTitle>Tema</CardTitle>
             <CardDescription>Selecione o tema</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="max-lg:flex max-lg:justify-center">
             <FormField
               name="theme"
               render={({ field }) => (
@@ -68,7 +68,7 @@ export function SettingsThemeForm() {
                   <RadioGroup
                     onValueChange={field.onChange}
                     defaultValue={field.value}
-                    className="grid max-w-md grid-cols-2 gap-8 pt-2"
+                    className="grid max-w-md grid-cols-2 gap-8 pt-2 max-lg:flex max-lg:max-w-48 max-lg:flex-col"
                   >
                     <FormItem>
                       <FormLabel className="[&:has([data-state=checked])>div]:border-primary">

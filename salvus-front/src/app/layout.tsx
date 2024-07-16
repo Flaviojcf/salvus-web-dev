@@ -5,6 +5,7 @@ import { MainDashboardSidebar } from './_components/main-sidebar'
 
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from '@/components/ui/toaster'
+import { FooterLayout } from './_components/footer-layout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,9 +29,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="grid grid-cols-[16rem_1fr]">
+          <div className="grid grid-cols-[16rem_1fr] max-lg:flex max-lg:flex-col">
             <MainDashboardSidebar />
             {children}
+            <FooterLayout />
           </div>
         </ThemeProvider>
         <Toaster />

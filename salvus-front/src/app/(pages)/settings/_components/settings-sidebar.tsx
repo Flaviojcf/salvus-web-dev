@@ -16,7 +16,7 @@ export function SettingsSidebar() {
 
   return (
     <aside>
-      <DashboardSidebarNav>
+      <DashboardSidebarNav className="max-lg:hidden">
         <DashboardSidebarNavMain>
           <DashboardSidebarNavLink
             href="/settings"

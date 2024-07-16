@@ -37,8 +37,8 @@ export default function Home() {
   }, [])
 
   return (
-    <DashBoardPage>
-      <DashBoardPageHeader className="max-h-[49px]">
+    <DashBoardPage className="max-lg:h-full">
+      <DashBoardPageHeader className="max-h-[49px] max-lg:justify-center">
         <DashBoardPageHeaderTitle className="dark:text-white">
           Produtos
         </DashBoardPageHeaderTitle>
