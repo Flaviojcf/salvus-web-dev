@@ -34,13 +34,13 @@ type ProductUpsertSheetProps = {
 }
 
 export const upsertProductSchema = zod.object({
-  Name: zod.string(),
-  Description: zod.string(),
+  Name: zod.string().trim().min(1, 'O nome é obrigatório'),
+  Description: zod.string().trim().min(1, 'A descrição é obrigatória'),
   Price: zod
     .string()
     .transform((val) => parseFloat(val))
     .refine((val) => !isNaN(val), {
-      message: 'Price must be a number',
+      message: 'O preço é obrigatório',
     }),
 })
 
@@ -105,7 +105,7 @@ export function ProductInsertSheet({
             </SheetHeader>
 
             <FormField
-              name="title"
+              name="Name"
               render={() => (
                 <FormItem>
                   <FormLabel>Nome do produto</FormLabel>
@@ -121,7 +121,7 @@ export function ProductInsertSheet({
               )}
             />
             <FormField
-              name="description"
+              name="Description"
               render={() => (
                 <FormItem>
                   <FormLabel>Descrição do produto</FormLabel>
@@ -139,7 +139,7 @@ export function ProductInsertSheet({
               )}
             />
             <FormField
-              name="price"
+              name="Price"
               render={() => (
                 <FormItem>
                   <FormLabel>Preço do produto</FormLabel>

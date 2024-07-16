@@ -43,12 +43,14 @@ type ProductUpdateSheetProps = {
 }
 
 export const updateProductSchema = zod.object({
-  Id: zod.string(),
-  Name: zod.string(),
-  Description: zod.string(),
+  Id: zod.string().trim().min(1),
+  Name: zod.string().trim().min(1, 'O nome é obrigatório'),
+  Description: zod.string().trim().min(1, 'A descrição é obrigatória'),
   Price: zod.union([
     zod.string().transform((val) => parseFloat(val)),
-    zod.number(),
+    zod.number().refine((val) => val !== undefined, {
+      message: 'O preço é obrigatório',
+    }),
   ]),
   CreatedAt: zod.string(),
 })
