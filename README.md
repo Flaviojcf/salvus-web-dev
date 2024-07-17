@@ -56,8 +56,7 @@ DATABASE_URL="mysql://root:salvus-web-dev@mysql-db:3306/salvus_web_dev"
 
 Suba o container  
 
-***Obs: Aguarde a mensagem de inicialização do servidor "Server is running on port 3000", as migrations são executadas e 
-as imagens da aplicação e do MySQL são baixadas o que pode causar uma lentidão.***
+***Obs: As migrations são executadas e as imagens da aplicação e do MySQL são baixadas o que pode levar alguns minutos.***
 ``` 
 docker compose up -d --build
 ```
@@ -87,6 +86,11 @@ Rode as migrations do prisma
 ``` 
 npx prisma migrate dev
 ```
+
+Inicie a aplicação
+``` 
+npm run dev
+```
 Acesse o swagger
 ``` 
 http://localhost:3000/api/swagger
@@ -106,6 +110,10 @@ DATABASE_URL="http://localhost:3000"
 Instale as dependências
 ``` 
 npm i
+```
+Inicie a aplicação
+``` 
+npm run dev
 ```
 Acesse a aplicação web
 ``` 
