@@ -49,12 +49,12 @@ Crie um arquivo .env copiando o que está dentro do .env.example
 DATABASE_URL="mysql://root:salvus-web-dev@mysql-db:3306/salvus_web_dev"
 ``` 
 
-Suba o container
+Suba o container  
+
+***Obs: Aguarde a mensagem de inicialização do servidor "Server is running on port 3000", as migrations são executadas e 
+as imagens da aplicação e do MySQL são baixadas o que pode causar uma lentidão.***
 ``` 
 docker compose up -d --build
-
-Obs: Aguarde a mensagem de inicialização do servidor "Server is running on port 3000", as migrations são executadas e 
-as imagens da aplicação e do MySQL são baixadas o que pode causar uma lentidão.
 ```
 Acesse o swagger
 ``` 
@@ -109,12 +109,12 @@ http://localhost:3031/
 
 # Acessando a aplicação hospedada
 
-Backend
+Backend  
+
+***Obs: O render acaba derrubando os servidores do tier gratuito, quando não ocorrem requests dentro de 
+um itervalo de 50s, caso o servidor esteja fora, após o primeiro acesso, aguarde alguns minutos até o serviço ser reiniciado.***
 ``` 
 https://salvus-web-dev.onrender.com
-
-Obs: O render acaba derrubando os servidores do tier gratuito, quando não ocorrem requests dentro de 
-um itervalo de 50s, caso o servidor esteja fora, após o primeiro acesso, aguarde alguns minutos até o serviço ser reiniciado.
 ```
 
 Frontend
