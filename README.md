@@ -1,8 +1,5 @@
 <h1 align="center">salvus-web-dev</h1>
 
-# Visão Geral do Projeto
-**salvus-web-dev** É uma aplicação full stack proposto pelo desafio técnico para a vaga de Desenvolvedor(a) de Sistemas WEB.
-
 ## Descrição
 **salvus-web-dev** É um projeto dividido em três desafios práticos, cada um focado em diferentes aspectos do desenvolvimento web: backend, frontend e integração/deploy.
 
