@@ -75,7 +75,7 @@ cd backend
 ```
 Crie um arquivo .env copiando o que está dentro do .env.example
 ``` 
-DATABASE_URL="mysql://root:salvus-web-dev@mysql-db:3306/salvus_web_dev"
+DATABASE_URL="mysql://root:salvus-web-dev@localhost:3306/salvus_web_dev"
 ``` 
 
 Instale as dependências
