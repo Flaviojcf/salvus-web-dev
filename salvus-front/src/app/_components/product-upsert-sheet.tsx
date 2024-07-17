@@ -43,7 +43,7 @@ export const upsertProductSchema = zod.object({
       message: 'O preço é obrigatório',
     })
     .refine((val) => val > 0, {
-      message: 'O preço deve ser um número positivo',
+      message: 'O preço deve ser um valor positivo',
     }),
 })
 
