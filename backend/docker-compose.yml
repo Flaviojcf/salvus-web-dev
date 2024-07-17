@@ -15,7 +15,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: salvus-web-dev
       MYSQL_DATABASE: salvus_web_dev
-      MYSQL_USER: root
       MYSQL_PASSWORD: salvus-web-dev
     ports:
       - "3306:3306"
