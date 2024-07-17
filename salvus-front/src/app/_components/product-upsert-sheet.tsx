@@ -41,6 +41,9 @@ export const upsertProductSchema = zod.object({
     .transform((val) => parseFloat(val))
     .refine((val) => !isNaN(val), {
       message: 'O preço é obrigatório',
+    })
+    .refine((val) => val > 0, {
+      message: 'O preço deve ser um número positivo',
     }),
 })
 

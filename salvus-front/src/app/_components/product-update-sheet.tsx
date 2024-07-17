@@ -47,10 +47,23 @@ export const updateProductSchema = zod.object({
   Name: zod.string().trim().min(1, 'O nome é obrigatório'),
   Description: zod.string().trim().min(1, 'A descrição é obrigatória'),
   Price: zod.union([
-    zod.string().transform((val) => parseFloat(val)),
-    zod.number().refine((val) => val !== undefined, {
-      message: 'O preço é obrigatório',
-    }),
+    zod
+      .string()
+      .transform((val) => parseFloat(val))
+      .refine((val) => !isNaN(val), {
+        message: 'O preço é obrigatório',
+      })
+      .refine((val) => val > 0, {
+        message: 'O preço deve ser um número positivo',
+      }),
+    zod
+      .number()
+      .refine((val) => val !== undefined, {
+        message: 'O preço é obrigatório',
+      })
+      .refine((val) => val > 0, {
+        message: 'O preço deve ser um número positivo',
+      }),
   ]),
   CreatedAt: zod.string(),
 })
