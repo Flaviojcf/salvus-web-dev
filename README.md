@@ -73,7 +73,7 @@ Entre na pasta do serviço de backend
 ``` 
 cd backend
 ```
-Crie um arquivo .env copiando o que está dentro do .env.example
+Crie um arquivo .env com a seguinte configuração
 ``` 
 DATABASE_URL="mysql://root:salvus-web-dev@localhost:3306/salvus_web_dev"
 ``` 
