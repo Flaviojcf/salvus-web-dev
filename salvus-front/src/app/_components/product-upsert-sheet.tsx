@@ -147,6 +147,7 @@ export function ProductInsertSheet({
                     <Input
                       placeholder="Informe o preço do produto"
                       type="number"
+                      step=".01"
                       {...register('Price')}
                     />
                   </FormControl>
