@@ -31,8 +31,13 @@
 
 ``` 
 https://github.com/Flaviojcf/salvus-web-dev.git
-``` 
+```
 
+Entre na pasta do projeto
+
+``` 
+cd salvus-web-dev
+```
 
 ## Rodando o backend com Docker
 ***Para utilizar os comandos do Docker, é necessário ter o Docker instalado na máquina.***
